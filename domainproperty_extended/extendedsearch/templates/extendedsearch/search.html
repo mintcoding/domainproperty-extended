@@ -1,24 +1,21 @@
 {% extends "base.html" %}
 
-{% load crispy_forms_tags %}
-
-{{ search_form.posted_date }}
-
-    <script>
-      $(function () {
-        $("#posted_date").datepicker({
-          format:'dd/mm/yyyy',
-        });
-      });
-    </script>
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+{% bootstrap_form_errors %}
 
 {% block content %}
 <h1>search.html</h1>
-<form method="post">
+<form role="form" method="post">
     {% csrf_token %}
+    {{ form.media }}
+    {% bootstrap_form form %}
 
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
 
-    {{ search_form|crispy }}
-    <button type="submit" class="btn btn-primary">Search properties</button>
 </form>
 {% endblock %}
