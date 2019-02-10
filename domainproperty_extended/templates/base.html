@@ -2,11 +2,30 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Domain Property - Extended Search{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap4 stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Fengyuan Chen's stylesheet and date picker script -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" integrity="sha256-n3ci71vDbbK59GUg1tuo+c3KO7+pnBOzt7BDmOe87s4=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js" integrity="sha256-KgOC04qt96w+EFba7KuNt9sT+ahJua25I0I2rrkZHFo=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!--img src="{% static "images/sitelogo.png" %}" alt="Logo"-->
-    {% block content %}{% endblock %}
+    <div class="container">
+
+        <input id="datepicker">
+
+        <script>
+            $(function () {
+            $("#datepicker").datepicker();
+            });
+        </script>
+
+        {% block content %}
+
+        {% endblock %}
+    </div>
 </body>
 </html>

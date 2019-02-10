@@ -1,10 +1,24 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{{ search_form.posted_date }}
+
+    <script>
+      $(function () {
+        $("#posted_date").datepicker({
+          format:'dd/mm/yyyy',
+        });
+      });
+    </script>
+
 {% block content %}
 <h1>search.html</h1>
-<form action="/extendedsearch/searchresults/" method="post">
+<form method="post">
     {% csrf_token %}
-    {{ search_form }}
-    <input type="submit" value="Submit">
+
+
+    {{ search_form|crispy }}
+    <button type="submit" class="btn btn-primary">Search properties</button>
 </form>
 {% endblock %}
