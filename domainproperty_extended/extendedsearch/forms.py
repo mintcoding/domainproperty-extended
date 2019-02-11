@@ -13,3 +13,4 @@ class ExtendedSearchForm(forms.Form):
     )
     property_types = forms.CheckboxSelectMultiple()
     minimum_price = forms.IntegerField(min_value=10000, max_value=2000000)
+    maximum_price = forms.IntegerField(min_value=10000, max_value=2000000)
