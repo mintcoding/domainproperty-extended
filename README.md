@@ -9,6 +9,7 @@ Since the app retrieves data from the Domain Property api (https://developer.dom
 The apiclient_cred file should follow this format:
 
 clientid = {your client id}
+
 clientpass = {your client secret}
   
 TODO:
