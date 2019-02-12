@@ -9,11 +9,15 @@
     {% for i in response_data %}
         <p>Display price: {{ i.listing.priceDetails.displayPrice }}</p>
         <p>Property type: {{ i.listing.propertyDetails.propertyType }}</p>
-        <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms }}</p>
-        <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms }}</p>
-        <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
+        <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms|stringformat:'d' }}</p>
+        <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms|stringformat:'d' }}</p>
+        {% if i.listing.propertyDetails.carspaces %}
+            <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
+        {% endif %}
         <p>Address:  {{ i.listing.propertyDetails.displayableAddress }}</p>
-        <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
+        {% if i.listing.propertyDetails.landArea %}
+            <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
+        {% endif %}
         {% for ii in i.listing.media %}
             <p><a href="{{ ii.url }}">{{ ii.url }}</a></p>
         {% endfor %}
