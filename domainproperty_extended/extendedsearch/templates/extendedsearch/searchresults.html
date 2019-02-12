@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Search Results</h2>
+<p></p>
+
+{% if response_data %}
+    {% for i in response_data %}
+        <p>Display price: {{ i.listing.priceDetails.displayPrice }}</p>
+        <p>Property type: {{ i.listing.propertyDetails.propertyType }}</p>
+        <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms }}</p>
+        <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms }}</p>
+        <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
+        <p>Address:  {{ i.listing.propertyDetails.displayableAddress }}</p>
+        <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
+        {% for ii in i.listing.media %}
+            <p><a href="{{ ii.url }}">{{ ii.url }}</a></p>
+        {% endfor %}
+        <p><a href="http://www.domain.com.au/{{ i.listing.listingSlug }}">{{ i.listing.listingSlug }}</a></p>
+    {% endfor %}
+
+{% else %}
+        <p>No properties match your search criteria</p>
+{% endif %}
+{% endblock %}

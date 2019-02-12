@@ -1,3 +1,5 @@
 Django
 requests
 requests-oauthlib
+django-bootstrap-datepicker-plus
+django-bootstrap4

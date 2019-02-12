@@ -3,14 +3,30 @@ from bootstrap_datepicker_plus import DatePickerInput
 
 
 class ExtendedSearchForm(forms.Form):
-    first_posted_date = forms.DateField(
+
+    postCode = forms.IntegerField(
+        min_value=6000,
+        max_value=6999,
+        label="Post code"
+    )
+    minPrice = forms.IntegerField(
+        min_value=10000, max_value=2000000,
+        label="Minimum price",
+    )
+    maxPrice = forms.IntegerField(
+        min_value=10000, max_value=2000000,
+        label="Maximum price",
+    )
+    inspectionFrom = forms.DateField(
         widget=DatePickerInput(format='%d/%m/%Y'),
         help_text="Pick a date sometime within the past three months",
+        label="Earliest inspection",
+        required=False
     )
-    last_posted_date = forms.DateField(
+    inspectionTo = forms.DateField(
         widget=DatePickerInput(format='%d/%m/%Y'),
         help_text="Pick a date sometime within the past three months",
+        label="Latest inspection",
+        required=False
     )
-    property_types = forms.CheckboxSelectMultiple()
-    minimum_price = forms.IntegerField(min_value=10000, max_value=2000000)
-    maximum_price = forms.IntegerField(min_value=10000, max_value=2000000)
+

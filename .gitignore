@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# domainproperty-extended specific
+apiclient_cred.txt
+
