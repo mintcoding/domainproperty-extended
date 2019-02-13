@@ -1,5 +1,7 @@
 from django import forms
 from bootstrap_datepicker_plus import DatePickerInput
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 
 class ExtendedSearchForm(forms.Form):
@@ -40,3 +42,23 @@ class ExtendedSearchForm(forms.Form):
         label="Latest inspection",
         required=False
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('postCode', css_class='form-group col-md-3 mb-0'),
+                Column('minPrice', css_class='form-group col-md-3 mb-0'),
+                Column('maxPrice', css_class='form-group col-md-3 mb-0')
+
+            ),
+            Row(
+                Column('updatedSince', css_class='form-group col-md-3 mb-0'),
+                Column('inspectionFrom', css_class='form-group col-md-3 mb-0'),
+                Column('inspectionTo', css_class='form-group col-md-3 mb-0')
+            ),
+            Submit('submit', 'Sign in')
+        )
+
+

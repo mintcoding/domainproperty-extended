@@ -3,3 +3,4 @@ requests
 requests-oauthlib
 django-bootstrap-datepicker-plus
 django-bootstrap4
+django-crispy-forms
