@@ -17,7 +17,9 @@ def parse_query_data(form):
                 "state": "WA",
                 "postCode": "",
             }
-        ]
+        ],
+        "page": 1,
+        "pageSize": 100,
     }
 
     for i in form.visible_fields():
@@ -38,5 +40,4 @@ def parse_query_data(form):
     except (ValueError, Exception) as e:
         raise e
 
-    print(querydata)
     return querydata

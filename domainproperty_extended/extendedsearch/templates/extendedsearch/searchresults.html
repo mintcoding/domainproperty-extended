@@ -6,24 +6,25 @@
 <p></p>
 
 {% if response_data %}
-    {% for i in response_data %}
-        <p>Display price: {{ i.listing.priceDetails.displayPrice }}</p>
-        <p>Property type: {{ i.listing.propertyDetails.propertyType }}</p>
-        <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms|stringformat:'d' }}</p>
-        <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms|stringformat:'d' }}</p>
-        {% if i.listing.propertyDetails.carspaces %}
-            <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
-        {% endif %}
-        <p>Address:  {{ i.listing.propertyDetails.displayableAddress }}</p>
-        {% if i.listing.propertyDetails.landArea %}
-            <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
-        {% endif %}
-        {% for ii in i.listing.media %}
-            <p><a href="{{ ii.url }}">{{ ii.url }}</a></p>
+    {% for page_number, page_data in response_data.items %}
+        {% for i in page_data %}
+            <p>Display price: {{ i.listing.priceDetails.displayPrice }}</p>
+            <p>Property type: {{ i.listing.propertyDetails.propertyType }}</p>
+            <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms|stringformat:'d' }}</p>
+            <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms|stringformat:'d' }}</p>
+            {% if i.listing.propertyDetails.carspaces %}
+                <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
+            {% endif %}
+            <p>Address:  {{ i.listing.propertyDetails.displayableAddress }}</p>
+            {% if i.listing.propertyDetails.landArea %}
+                <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
+            {% endif %}
+            {% for ii in i.listing.media %}
+                <p><a href="{{ ii.url }}">{{ ii.url }}</a></p>
+            {% endfor %}
+            <p><a href="http://www.domain.com.au/{{ i.listing.listingSlug }}">{{ i.listing.listingSlug }}</a></p>
         {% endfor %}
-        <p><a href="http://www.domain.com.au/{{ i.listing.listingSlug }}">{{ i.listing.listingSlug }}</a></p>
     {% endfor %}
-
 {% else %}
         <p>No properties match your search criteria</p>
 {% endif %}
