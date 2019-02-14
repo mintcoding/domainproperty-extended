@@ -2,6 +2,7 @@ from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 from requests.auth import HTTPBasicAuth
 import json
+from django.core.cache import cache
 
 
 class Auth:
@@ -41,18 +42,12 @@ class Auth:
     def retrieve_credentials(self):
         if not self.clientid and not self.clientpass:
             self.clientid, self.clientpass = self.retrieve_credentials_from_file()
+
         return self.clientid, self.clientpass
 
     def retrieve_approved_data(self, query_data):
-        client = BackendApplicationClient(client_id=self.clientid)
-        basic_auth = HTTPBasicAuth(self.clientid, self.clientpass)
-        oauth = OAuth2Session(client=client)
-        token = oauth.post(self.token_url, auth=basic_auth, data=self.token_url_params)
 
-        try:
-            auth_token = json.loads(token.content)["access_token"]
-        except json.JSONDecodeError as e:
-            raise ValueError(e)
+        oauth, auth_token = self.retrieve_token()
 
         access_token = "Bearer " + auth_token
         url_header = {
@@ -76,3 +71,36 @@ class Auth:
             query_data["page"] += 1
 
         return r_dict_coll
+
+    def retrieve_token(self):
+
+        client = BackendApplicationClient(client_id=self.clientid)
+        basic_auth = HTTPBasicAuth(self.clientid, self.clientpass)
+        oauth = OAuth2Session(client=client)
+
+        cached_token = cache.get('cached_token')
+        print("cached_token: " + str(cached_token))
+        if not cached_token:
+            print("Get new token")
+            token = oauth.post(self.token_url, auth=basic_auth, data=self.token_url_params)
+            try:
+                token_content = json.loads(token.content)
+                auth_token = token_content["access_token"]
+            except json.JSONDecodeError as e:
+                raise ValueError(e)
+
+            try:
+                token_expires_in = token_content['expires_in']
+                print(str(token_expires_in))
+            except Exception as e:
+                raise e
+
+            try:
+                cache.set('cached_token', auth_token, timeout=(token_expires_in - 500))
+            except Exception as e:
+                raise e
+        else:
+            print("Use cached token")
+            auth_token = cached_token
+
+        return oauth, auth_token
