@@ -132,6 +132,6 @@ STATIC_URL = '/static/'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'DomainPropertyCache',
+        'LOCATION': 'extendedsearch_domainpropertycache',
     }
 }
