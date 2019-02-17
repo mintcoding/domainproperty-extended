@@ -42,11 +42,29 @@ class ExtendedSearchForm(forms.Form):
         label="Latest inspection",
         required=False
     )
+    page = forms.IntegerField(
+        max_value=10,
+        label='page',
+        required=False,
+        initial=1,
+        widget=forms.HiddenInput
+    )
+    pageSize = forms.IntegerField(
+        max_value=100,
+        label='pageSize',
+        required=False,
+        initial=10,
+        widget=forms.HiddenInput
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
+            Row(
+                Column('page', css_class='form-group col-md-3 mb-0'),
+                Column('pageSize', css_class='form-group col-md-3 mb-0'),
+            ),
             Row(
                 Column('postCode', css_class='form-group col-md-3 mb-0'),
                 Column('minPrice', css_class='form-group col-md-3 mb-0'),

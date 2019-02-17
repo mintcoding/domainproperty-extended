@@ -55,22 +55,17 @@ class Auth:
             "Authorization": access_token
         }
 
-        r_dict_coll = {}
-        while query_data["page"] <= 5:
-            r = oauth.post(url=self.search_url, json=query_data, headers=url_header)
-            r.raise_for_status()
-            r_str = r.content.decode('utf-8')
-            if len(r_str.strip()) > 2:
-                try:
-                    r_dict = json.loads(r_str)
-                except json.JSONDecodeError as e:
-                    raise ValueError(e)
-                r_dict_coll.update({"page" + str(query_data["page"]): r_dict})
-            else:
-                break
-            query_data["page"] += 1
+        r = oauth.post(url=self.search_url, json=query_data, headers=url_header)
+        r.raise_for_status()
+        r_str = r.content.decode('utf-8')
+        r_dict = {}
+        if len(r_str.strip()) > 2:
+            try:
+                r_dict = json.loads(r_str)
+            except json.JSONDecodeError as e:
+                raise ValueError(e)
 
-        return r_dict_coll
+        return r_dict
 
     def retrieve_token(self):
 
