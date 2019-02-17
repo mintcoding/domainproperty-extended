@@ -2,17 +2,24 @@
 
 Alternative search function for https://www.domain.com.au/
 
-After cloning the repo and starting a local default Django instance, the app can be viewed at http://127.0.0.1:8000/extendedsearch
+After cloning the repo and following the instructions below, the app can be viewed on your machine at http://127.0.0.1:8000/extendedsearch
 
-Since the app retrieves data from the Domain Property api (https://developer.domain.com.au/docs/endpoints), you will need to have a credentials file named apiclient_cred.txt located in the same dir as manage.py
+## Instructions:
 
-The apiclient_cred file should follow this format:
+1)  Since the app retrieves data from the Domain Property api (https://developer.domain.com.au/docs/endpoints), you will need to have a credentials file named apiclient_cred.txt located in the same dir as manage.py
 
-clientid = {your client id}
+* The apiclient_cred file should follow this format:
 
-clientpass = {your client secret}
+  + clientid = {your client id}
+
+  + clientpass = {your client secret}
+
+2)  run "python manage.py migrate"
+
+3)  run "python manage.py runserver"
   
-TODO:
+### TODO:
+
 Add further search features
 
 Improve Search Results page presentation
