@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import FormView
 from .forms import ExtendedSearchForm
-from . import auth
+from . import domainapi
 from django.core.validators import ValidationError
 
 
@@ -83,8 +83,8 @@ class SearchForm(FormView):
 
 
 def get_response_data(query_data):
-    request_auth = auth.Auth()
-    request_auth.clientid, request_auth.clientpass = request_auth.retrieve_credentials()
+    request_auth = domainapi.DomainApi()
+    request_auth.retrieve_credentials()
     response_data = request_auth.retrieve_approved_data(query_data)
 
     return response_data
