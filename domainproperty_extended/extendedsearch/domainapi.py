@@ -26,7 +26,7 @@ class DomainApi:
         self.oauth = OAuth2Session(client=self.client)
 
     def retrieve_credentials_from_file(self):
-
+        # See README.md for recommended file format
         try:
             with open('apiclient_cred.txt') as cfile:
                 credentials = cfile.readlines()
@@ -48,11 +48,13 @@ class DomainApi:
                     raise e
 
     def retrieve_credentials(self):
+        # If instance credentials (clientid, clientpass) are empty, call retrieve_credentials_from_file method
         if not self.clientid and not self.clientpass:
             self.retrieve_credentials_from_file()
 
     def retrieve_approved_data(self, query_data):
-
+        # query_data is a dict in the format specified here:
+        # https://developer.domain.com.au/docs/endpoints/listings/listings_detailedresidentialsearch
         self.retrieve_token()
         self.access_token = "Bearer " + self.auth_token
         url_header = {
@@ -67,7 +69,7 @@ class DomainApi:
         return r_dict
 
     def retrieve_token(self):
-
+        # Checks cache for OAuth token; if none, request new one
         self.client = BackendApplicationClient(client_id=self.clientid)
         self.basic_auth = HTTPBasicAuth(self.clientid, self.clientpass)
         self.oauth = OAuth2Session(client=self.client)
