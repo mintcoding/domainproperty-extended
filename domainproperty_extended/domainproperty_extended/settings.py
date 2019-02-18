@@ -135,3 +135,5 @@ CACHES = {
         'LOCATION': 'extendedsearch_domainpropertycache',
     }
 }
+
+DOMAIN_API_PAGE_SIZE = 10

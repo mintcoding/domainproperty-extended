@@ -76,7 +76,7 @@ class ExtendedSearchForm(forms.Form):
                 Column('inspectionFrom', css_class='form-group col-md-3 mb-0'),
                 Column('inspectionTo', css_class='form-group col-md-3 mb-0')
             ),
-            Submit('submit', 'Sign in')
+            Submit('submit', 'Search properties')
         )
 
 

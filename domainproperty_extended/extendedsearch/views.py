@@ -3,6 +3,7 @@ from django.views.generic import FormView
 from .forms import ExtendedSearchForm
 from . import domainapi
 from django.core.validators import ValidationError
+from django.conf import settings
 
 
 class SearchForm(FormView):
@@ -31,7 +32,7 @@ class SearchForm(FormView):
                 }
             ],
             "page": 1,
-            "pageSize": 10,
+            "pageSize": settings.DOMAIN_API_PAGE_SIZE,
         }
 
     def post(self, request, *args, **kwargs):
