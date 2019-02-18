@@ -73,7 +73,6 @@ class DomainApi:
         self.oauth = OAuth2Session(client=self.client)
 
         self.cached_token = cache.get('cached_token')
-        print("cached_token: " + self.cached_token)
         if not self.cached_token:
             print("Get new token")
             token = self.oauth.post(self.token_url, auth=self.basic_auth, data=self.token_url_params)
