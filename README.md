@@ -16,7 +16,9 @@ After cloning the repo and following the instructions below, the app can be view
 
 2)  run "python manage.py migrate"
 
-3)  run "python manage.py runserver"
+3)  run "python3 manage.py loaddata ./extendedsearch/fixtures/SortKey.json"
+
+4)  run "python manage.py runserver"
   
 ### TODO:
 
