@@ -9,37 +9,25 @@ class ExtendedSearchForm(forms.Form):
     postCode = forms.IntegerField(
         min_value=6000,
         max_value=6999,
-        help_text="WA postcodes only",
+        help_text="WA only",
         label="Post code"
     )
     minPrice = forms.IntegerField(
         min_value=1000,
         max_value=2000000,
-        help_text="Range: $1000 to $2,000,000",
-        label="Minimum price",
+        help_text="$1000 to $2m",
+        label="Min price",
     )
     maxPrice = forms.IntegerField(
         min_value=1000,
         max_value=2000000,
-        help_text="Range: $1000 to $2,000,000",
-        label="Maximum price",
+        help_text="$1000 to $2m",
+        label="Max price",
     )
     updatedSince = forms.DateField(
         widget=DatePickerInput(format='%Y-%m-%d'),
         help_text="Optional",
-        label="Listing updated from",
-        required=False
-    )
-    inspectionFrom = forms.DateField(
-        widget=DatePickerInput(format='%Y-%m-%d'),
-        help_text="Optional",
-        label="Earliest inspection",
-        required=False
-    )
-    inspectionTo = forms.DateField(
-        widget=DatePickerInput(format='%Y-%m-%d'),
-        help_text="Optional",
-        label="Latest inspection",
+        label="Updated from",
         required=False
     )
     page = forms.IntegerField(
@@ -62,19 +50,17 @@ class ExtendedSearchForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('page', css_class='form-group col-md-3 mb-0'),
-                Column('pageSize', css_class='form-group col-md-3 mb-0'),
-            ),
-            Row(
-                Column('postCode', css_class='form-group col-md-3 mb-0'),
-                Column('minPrice', css_class='form-group col-md-3 mb-0'),
-                Column('maxPrice', css_class='form-group col-md-3 mb-0')
+                Column('postCode', css_class='form-group col-4'),
+                Column('minPrice', css_class='form-group col-4'),
+                Column('maxPrice', css_class='form-group col-4')
 
             ),
             Row(
-                Column('updatedSince', css_class='form-group col-md-3 mb-0'),
-                Column('inspectionFrom', css_class='form-group col-md-3 mb-0'),
-                Column('inspectionTo', css_class='form-group col-md-3 mb-0')
+                Column('updatedSince', css_class='form-group col-md-auto col-6'),
+            ),
+            Row(
+                Column('page'),
+                Column('pageSize'),
             ),
             Submit('submit', 'Search properties')
         )

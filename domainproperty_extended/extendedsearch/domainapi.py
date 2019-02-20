@@ -24,6 +24,8 @@ class DomainApi:
         self.client = BackendApplicationClient(client_id=self.clientid)
         self.basic_auth = HTTPBasicAuth(self.clientid, self.clientpass)
         self.oauth = OAuth2Session(client=self.client)
+        self.response_data_raw = []
+        self.response_data = []
 
     def retrieve_credentials_from_file(self):
         # See README.md for recommended file format
@@ -64,9 +66,10 @@ class DomainApi:
 
         r = self.oauth.post(url=self.search_url, json=query_data, headers=url_header)
         r.raise_for_status()
-        r_dict = r.json()
+        self.response_data_raw = r.json()
+        self.prepare_response_data()
 
-        return r_dict
+        return self.response_data
 
     def retrieve_token(self):
         # Checks cache for OAuth token; if none, request new one
@@ -97,3 +100,30 @@ class DomainApi:
         else:
             print("Use cached token")
             self.auth_token = self.cached_token
+
+    def prepare_response_data(self):
+        # Parses the raw JSON response to return required data only to the display template
+        for l_iter in self.response_data_raw:
+            if l_iter:
+                listing_dict = {}
+                try:
+                    if 'displayPrice' in l_iter['listing']['priceDetails']:
+                        listing_dict.update({'displayPrice': l_iter['listing']['priceDetails']['displayPrice']})
+                    if 'propertyType' in l_iter['listing']['propertyDetails']:
+                        listing_dict.update({'propertyType': l_iter['listing']['propertyDetails']['propertyType']})
+                    if 'bathrooms' in l_iter['listing']['propertyDetails']:
+                        listing_dict.update({'bathrooms': l_iter['listing']['propertyDetails']['bathrooms']})
+                    if 'bedrooms' in l_iter['listing']['propertyDetails']:
+                        listing_dict.update({'bedrooms': l_iter['listing']['propertyDetails']['bedrooms']})
+                    if 'carspaces' in  l_iter['listing']['propertyDetails']:
+                        listing_dict.update({'carspaces': l_iter['listing']['propertyDetails']['carspaces']})
+                        listing_dict.update({'displayableAddress': l_iter['listing']['propertyDetails']['displayableAddress']})
+                    if 'landArea' in l_iter['listing']['propertyDetails']:
+                        listing_dict.update({'landArea': l_iter['listing']['propertyDetails']['landArea']})
+                    if 'listingSlug' in l_iter['listing']:
+                        listing_dict.update({'listingSlug': l_iter['listing']['listingSlug']})
+                    if l_iter['listing']['media']:
+                        listing_dict.update({'pic': l_iter['listing']['media'][0]['url']})
+                except (ValueError, Exception) as e:
+                    raise e
+                self.response_data.append(listing_dict)

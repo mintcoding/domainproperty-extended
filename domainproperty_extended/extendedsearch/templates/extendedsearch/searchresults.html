@@ -1,26 +1,43 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 
-<h2>Search Results</h2>
+<h3>Search Results</h3>
 <p></p>
 
 {% if response_data %}
     {% for i in response_data %}
-        <ul>
-            <p>Display price: {{ i.listing.priceDetails.displayPrice }}</p>
-            <p>Property type: {{ i.listing.propertyDetails.propertyType }}</p>
-            <p>Bathrooms: {{ i.listing.propertyDetails.bathrooms|stringformat:'d' }}</p>
-            <p>Bedrooms: {{ i.listing.propertyDetails.bedrooms|stringformat:'d' }}</p>
-            {% if i.listing.propertyDetails.carspaces %}
-                <p>Car spaces: {{ i.listing.propertyDetails.carspaces }}</p>
+            <img src="{{ i.pic }}" class="img-fluid">
+
+            <div class="col-md-auto mb-0">
+                Display price: {{ i.displayPrice }}
+            </div>
+            <div class="col-md-auto mb-0">
+                Property type: {{ i.propertyType }}
+            </div>
+            <div class="col-md-auto mb-0">
+                Bathrooms: {{ i.bathrooms|stringformat:'d' }}
+            </div>
+            <div class="col-md-auto mb-0">
+                Bedrooms: {{ i.bedrooms|stringformat:'d' }}
+            </div>
+            {% if i.carspaces %}
+                <div class="col-md-auto mb-0">
+                    Car spaces: {{ i.carspaces }}
+                </div>
             {% endif %}
-            <p>Address:  {{ i.listing.propertyDetails.displayableAddress }}</p>
-            {% if i.listing.propertyDetails.landArea %}
-                <p>Land size:  {{ i.listing.propertyDetails.landArea }}</p>
+            <div class="col-md-auto mb-0">
+            <p>{{ i.displayableAddress }}</p>
+            </div>
+            {% if i.landArea %}
+                <div class="col-md-auto mb-0">
+                    Land size:  {{ i.landArea }}
+                </div>
             {% endif %}
-            <p><a href="http://www.domain.com.au/{{ i.listing.listingSlug }}">{{ i.listing.listingSlug }}</a></p>
-        </ul>
+            <div class="col-md-auto mb-0">
+                <a href="http://www.domain.com.au/{{ i.listing.listingSlug }}">{{ i.listingSlug }}</a>
+            </div>
+            <p></p>
     {% endfor %}
 {% else %}
         <p>No properties match your search criteria</p>

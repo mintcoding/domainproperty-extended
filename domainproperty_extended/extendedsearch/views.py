@@ -34,6 +34,9 @@ class SearchForm(FormView):
             "page": 1,
             "pageSize": settings.DOMAIN_API_PAGE_SIZE,
         }
+        self.context = {
+            'response_data': {}
+        }
 
     def post(self, request, *args, **kwargs):
 
@@ -41,12 +44,13 @@ class SearchForm(FormView):
         if form.is_valid():
             self.parse_form_data(form)
             response_data = get_response_data(self.querydata)
-            context = {
-                'response_data': response_data
-            }
+            try:
+                self.context.update({'response_data': response_data})
+            except (ValueError, Exception) as e:
+                raise e
 
             request.session['querydata'] = self.querydata
-            return render(request, template_name='extendedsearch/searchresults.html', context=context)
+            return render(request, template_name='extendedsearch/searchresults.html', context=self.context)
         else:
             raise ValidationError(form.errors)
 
@@ -59,11 +63,12 @@ class SearchForm(FormView):
             query_data = request.session['querydata']
             query_data.update({'page': request.GET.get('page')})
             response_data = get_response_data(query_data)
-            context = {
-                'response_data': response_data
-            }
+            try:
+                self.context.update({'response_data': response_data})
+            except (ValueError, Exception) as e:
+                raise e
 
-            return render(request, template_name='extendedsearch/searchresults.html', context=context)
+            return render(request, template_name='extendedsearch/searchresults.html', context=self.context)
         else:
             return self.render_to_response(self.get_context_data())
 
