@@ -1,0 +1,23 @@
+[
+  {
+    "model": "extendedsearch.SortKey",
+    "pk": 1,
+    "fields": {
+      "sort_choices": "Default"
+    }
+  },
+    {
+    "model": "extendedsearch.SortKey",
+    "pk": 2,
+    "fields": {
+      "sort_choices": "Price"
+    }
+  },
+    {
+    "model": "extendedsearch.SortKey",
+    "pk": 3,
+    "fields": {
+      "sort_choices": "DateUpdated"
+    }
+  }
+]

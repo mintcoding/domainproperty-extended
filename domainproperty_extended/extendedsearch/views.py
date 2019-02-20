@@ -22,18 +22,15 @@ class SearchForm(FormView):
                     "state": "WA",
                     "postCode": "",
                 }
-            ]
-        }
-        self.form_dict = {
-            "locations": [
-                {
-                    "state": "WA",
-                    "postCode": "",
-                }
             ],
             "page": 1,
             "pageSize": settings.DOMAIN_API_PAGE_SIZE,
+            "sort": {
+                "sortKey": "",
+                "direction": "Ascending",
+            }
         }
+
         self.context = {
             'response_data': {}
         }
@@ -79,22 +76,24 @@ class SearchForm(FormView):
             field_value = i.value()
             if i.name == "postCode":
                 try:
-                    self.form_dict['locations'][0].update({'postCode': field_value})
+                    self.querydata['locations'][0].update({field_name: field_value})
+                except (ValueError, Exception) as e:
+                    raise e
+            elif i.name in ['sortKey', 'direction']:
+                try:
+                    self.querydata['sort'].update({field_name: field_value})
                 except (ValueError, Exception) as e:
                     raise e
             else:
                 try:
-                    self.form_dict.update({field_name: field_value})
+                    self.querydata.update({field_name: field_value})
                 except (ValueError, Exception) as e:
                     raise e
-        try:
-            self.querydata.update(self.form_dict)
-        except (ValueError, Exception) as e:
-            raise e
 
 
 def get_response_data(query_data):
     # Interacts with the Domain API to receive approved data according to the query_data dict request
+    print(query_data)
     request_auth = domainapi.DomainApi()
     request_auth.retrieve_credentials()
     response_data = request_auth.retrieve_approved_data(query_data)

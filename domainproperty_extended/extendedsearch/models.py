@@ -7,3 +7,22 @@ class DomainPropertyCache(models.Model):
     value = models.CharField(max_length=250, null=False)
     expires = models.DateTimeField(max_length=250, null=False, db_index=True)
 
+
+class SortKey(models.Model):
+
+    DEFAULT = 'Default'
+    PRICE = 'Price'
+    DATE_UPDATED = 'DateUpdated'
+    CHOICES = (
+        ('Default', 'Default'),
+        ('Price', 'Price'),
+        ('DateUpdated', 'Date Updated')
+    )
+    sort_choices = models.CharField(
+        max_length=20,
+        choices=CHOICES,
+        default=DEFAULT
+    )
+
+    def __str__(self):
+        return self.sort_choices
