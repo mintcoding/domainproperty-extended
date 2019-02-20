@@ -72,8 +72,8 @@ class ExtendedSearchForm(forms.Form):
                 Column('maxPrice', css_class='form-group col-md-auto col-4')
             ),
             Row(
-                Column('sortKey', css_class='form-group col-md-auto col-4'),
-                Column('direction', css_class='form-group col-md-auto col-4')
+                Column('sortKey', css_class='form-group col-md-auto col-6'),
+                Column('direction', css_class='form-group col-md-auto col-6')
 
             ),
             Row(
