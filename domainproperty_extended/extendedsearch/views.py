@@ -93,7 +93,6 @@ class SearchForm(FormView):
 
 def get_response_data(query_data):
     # Interacts with the Domain API to receive approved data according to the query_data dict request
-    print(query_data)
     request_auth = domainapi.DomainApi()
     request_auth.retrieve_credentials()
     response_data = request_auth.retrieve_approved_data(query_data)

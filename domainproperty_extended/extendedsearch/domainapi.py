@@ -104,7 +104,6 @@ class DomainApi:
     def prepare_response_data(self):
         # Parses the raw JSON response to return required data only to the display template
         for l_iter in self.response_data_raw:
-            print(type(l_iter))
             if l_iter:
                 listing_dict = {}
                 try:
