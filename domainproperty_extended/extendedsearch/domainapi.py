@@ -104,26 +104,21 @@ class DomainApi:
     def prepare_response_data(self):
         # Parses the raw JSON response to return required data only to the display template
         for l_iter in self.response_data_raw:
+            print(type(l_iter))
             if l_iter:
                 listing_dict = {}
                 try:
-                    if 'displayPrice' in l_iter['listing']['priceDetails']:
-                        listing_dict.update({'displayPrice': l_iter['listing']['priceDetails']['displayPrice']})
-                    if 'propertyType' in l_iter['listing']['propertyDetails']:
-                        listing_dict.update({'propertyType': l_iter['listing']['propertyDetails']['propertyType']})
-                    if 'bathrooms' in l_iter['listing']['propertyDetails']:
-                        listing_dict.update({'bathrooms': l_iter['listing']['propertyDetails']['bathrooms']})
-                    if 'bedrooms' in l_iter['listing']['propertyDetails']:
-                        listing_dict.update({'bedrooms': l_iter['listing']['propertyDetails']['bedrooms']})
-                    if 'carspaces' in  l_iter['listing']['propertyDetails']:
-                        listing_dict.update({'carspaces': l_iter['listing']['propertyDetails']['carspaces']})
-                        listing_dict.update({'displayableAddress': l_iter['listing']['propertyDetails']['displayableAddress']})
-                    if 'landArea' in l_iter['listing']['propertyDetails']:
-                        listing_dict.update({'landArea': l_iter['listing']['propertyDetails']['landArea']})
-                    if 'listingSlug' in l_iter['listing']:
-                        listing_dict.update({'listingSlug': l_iter['listing']['listingSlug']})
-                    if l_iter['listing']['media']:
-                        listing_dict.update({'pic': l_iter['listing']['media'][0]['url']})
+                        listing_dict.update({'displayPrice': l_iter['listing']['priceDetails'].get('displayPrice', 0)})
+                        listing_dict.update({'propertyType': l_iter['listing']['propertyDetails'].get('propertyType', "")})
+                        listing_dict.update({'bathrooms': l_iter['listing']['propertyDetails'].get('bathrooms', 0)})
+                        listing_dict.update({'bedrooms': l_iter['listing']['propertyDetails'].get('bedrooms', 0)})
+                        listing_dict.update({'carspaces': l_iter['listing']['propertyDetails'].get('carspaces', 0)})
+                        listing_dict.update({'displayableAddress': l_iter['listing']['propertyDetails'].get('displayableAddress', "")})
+                        listing_dict.update({'landArea': l_iter['listing']['propertyDetails'].get('landArea', 0)})
+                        listing_dict.update({'listingSlug': l_iter['listing'].get('listingSlug', "")})
+                        media = l_iter['listing'].get('media')
+                        if media:
+                            listing_dict.update({'pic': media[0]['url']})
                 except (ValueError, Exception) as e:
                     raise e
                 self.response_data.append(listing_dict)
