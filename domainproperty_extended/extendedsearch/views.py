@@ -4,6 +4,7 @@ from .forms import ExtendedSearchForm
 from . import domainapi
 from django.core.validators import ValidationError
 from django.conf import settings
+from requests.exceptions import RequestException
 
 
 class SearchForm(FormView):
@@ -59,6 +60,10 @@ class SearchForm(FormView):
             # Should no 'page' parameter exist, extendedsearch form is returned
             query_data = request.session['querydata']
             query_data.update({'page': request.GET.get('page')})
+            try:
+                request.session['querydata'] = query_data
+            except (RequestException, Exception) as e:
+                raise e
             response_data = get_response_data(query_data)
             try:
                 self.context.update({'response_data': response_data})
